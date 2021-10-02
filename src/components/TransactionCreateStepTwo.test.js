@@ -14,6 +14,11 @@ test("if an amount and note entered, button enabled", async () => {
 
   userEvent.type(amount, "50");
   userEvent.type(note, "dinner");
-
   expect(await screen.findByRole("button", { name: /pay/i })).toBeEnabled();
+});
+
+test("if after typing amount there is a $ before value", async () => {
+  render(<TransactionCreateStepTwo sender={{ id: "1" }} receiver={{ id: "5" }} />);
+  userEvent.type(screen.getByPlaceholderText(/amount/i), "50");
+  expect(await screen.findByPlaceholderText(/amount/i)).toHaveValue("$50");
 });
